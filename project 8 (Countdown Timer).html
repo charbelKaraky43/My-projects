@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Countdown Timer</title>
+  <style>
+    body{
+  background-image:url(https://images.unsplash.com/photo-1418985991508-e47386d96a71?ixlib=rb-4.0.3&w=1080&fit=max&q=80&fm=jpg&crop=entropy&cs=tinysrgb);
+  background-position:center center;
+  min-height:100vh;
+  background-size:cover;
+}
+.container{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  min-height:70vh;
+}
+
+.countdown{
+  display:flex;
+  flex-direction:row;
+  font-weight:bold;
+}
+.edit1{
+  margin:10px;
+  font-size:24px;
+  color:red;
+}
+.edit2{
+  margin:10px;
+  font-size:24px;
+  color:blue;
+}
+.edit3{
+  margin:10px;
+  font-size:24px;
+  color:orange;
+}
+.edit4{
+  margin:10px;
+  font-size:24px;
+  color:green;
+}
+  </style>
+</head>
+<body>
+  <div class="container">
+  <h1>New Year's Countdown Timer</h1>
+  <div class="countdown">
+    <div class="edit1" id="days">0</div>
+    <div class="edit2" id="hours">0</div>
+    <div class="edit3" id="minutes">0</div>
+    <div class="edit4" id="seconds">0</div>
+  </div>
+    </div>
+</body>
+  <script>
+    let days=document.getElementById("days")
+let hours=document.getElementById("hours")
+let minutes=document.getElementById("minutes")
+let seconds=document.getElementById("seconds")
+
+let newYear=new Date().getFullYear()+1
+let newDate=new Date(newYear,0,1,0,0)
+let Ndate=newDate.getTime()
+//TO TEST IT:
+//let Ndate=new Date().getTime()+10000
+
+function countdown(){
+  let recent=new Date().getTime()
+  let recent1=Ndate-recent
+  
+if(recent1===0 || recent1<0){
+  clearInterval(repeat)
+  document.body.style.backgroundImage='url(https://wallpapercave.com/wp/wp2758039.gif)';
+  document.body.innerHTML=""
+}
+  else{
+  if(Math.floor(recent1/1000/3600/24)<2){
+  days.innerText=removeS(Math.floor(recent1/1000/3600/24))+" day"
+  }
+  else{
+    days.innerText=removeS(Math.floor(recent1/1000/3600/24))+" days"
+  }
+  if(Math.floor((recent1/1000/3600)%24)<2){
+  hours.innerText=removeS(Math.floor(recent1/1000/3600)%24)+" hour"
+  }
+  else{
+    hours.innerText=removeS(Math.floor(recent1/1000/3600)%24)+" hours"
+  }
+  if(Math.floor(recent1/1000/60)%60<2){
+    minutes.innerText=removeS(Math.floor(recent1/1000/60)%60)+" minute"
+  }
+  else{
+    minutes.innerText=removeS(Math.floor(recent1/1000/60)%60)+" minutes"
+  }
+  if((Math.floor(recent1/1000)%60)<2){
+    seconds.innerText=removeS(Math.floor(recent1/1000)%60)+" second"
+  }
+  else{
+    seconds.innerText=removeS(Math.floor(recent1/1000)%60)+" seconds"
+  }}
+}
+function removeS(num){
+  return num<10?"0"+num : num
+}
+let repeat=setInterval(countdown,1000)
+
+  </script>
+</html>

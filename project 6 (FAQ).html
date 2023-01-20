@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<head>
+  <title>Frequently Asked Question</title>
+  <meta name="viewport" content="width=device-width initial-scale=1.0">
+  <style>
+    body{
+  background-color:lightgrey;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+}
+.container{
+  width:65%;
+  border-radius:10px;
+  background-color:white;
+  padding:20px;
+}
+.container .title{
+ text-align:center;
+ font-size:30px;
+ border-bottom:1px solid black;
+ padding:0px 0px 20px 0px;
+ margin-bottom:10px
+}
+.container .content .question{
+  font-size:20px;
+  border-bottom:1px solid grey;
+  margin:10px;
+  padding:7px;
+  cursor:pointer;
+  position:relative;
+  transition:.5s;
+}
+.container .content .question::after{
+  content:'+';
+  position:absolute;
+  right:-5px;
+  font-weight:bold;
+  font-size:23px;
+  transition:.5s;
+}
+.container .content .answer{
+  font-size:17px;
+  line-height:22px;
+  height:0px;
+  overflow:hidden;
+  transition:.5s;
+  width:100%;
+}
+.container .content.active .answer{
+  height:100px;
+  overflow:auto;
+}
+.container .content.active .question::after{
+  content:'-';
+  position:absolute;
+  right:-5px;
+  font-weight:bold;
+  font-size:30px;
+  top:-5%;
+}
+.container .content.active .question{
+  transition:.5s;
+  font-size:25px;
+}
+  </style>
+</head>
+<body>
+  <div class="container">
+    
+    <div class="title">Frequently Asked Question</div>
+    
+    <div class="content">
+    <div class="question">What's a FAQ?</div>
+    <div class="answer"> A frequently asked questions list is often
+      used in articles, websites, email lists, and online forums
+      where common questions tend to recur, for example through posts
+      or queries by new users related to common knowledge gaps. </div>
+    </div>
+  <div class="content">
+    <div class="question">Is LMAO rude?
+    </div>
+    <div class="answer">The LMAO meaning can be controversial.
+      It depends on what you consider inappropriate. The 'a' in LMAO stands
+      for ass, but some people don't find that term offensive. It's often
+      less controversial than dropping _F-bomb_s or other curse words.</div>
+    </div>
+    <div class="content">
+    <div class="question">What is AM & PM full form?
+    </div>
+    <div class="answer">AM or Ante Meridiem represents the first period.
+      AM or it is full form Ante Meridiem describes the midnight to noontime.
+      The full form of PM is Post Meridiem . PM denotes post-midday period.
+      It is another unit of the convention time which is associated with
+      the 12-hour clock.</div>
+    </div>
+  
+  </div>
+  
+</body>
+
+<script> const result=document.getElementsByClassName('content')
+
+for(i=0;i<result.length;i++){
+result[i].addEventListener('click',function(){
+  this.classList.toggle('active')
+})
+}
+</script>
+</html>

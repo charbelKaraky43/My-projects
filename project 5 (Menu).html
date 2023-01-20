@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+  ul li{
+  list-style:none;
+  border:2px solid gold;
+  width:260px;
+  text-align:center;
+  padding:10px;
+  font-size:20px;
+  font-weight:bold;
+}
+ul li:hover{
+  background-color:lightgrey;
+}
+ul{
+  margin-left:0px;
+}
+input{
+  margin-left:40px;
+  text-align:center;
+  padding:10px;
+  font-weight:bold;
+  width:200px;
+}
+button{
+  width:60px;
+  padding:10px;
+  font-weight:bold;
+}
+button:hover{
+background-color:red;
+}
+</style>
+  <title>project 5</title>
+  </head>
+  
+  <body>
+    <ul id="sports">
+      <li id="football">Football</li>
+      <li id="basketball">Basketball</li>
+      <li id="voleyball">Voleyball</li>
+      <li id="tennis">Tennis</li>
+      </ul>
+    <label>
+    <input type="text" id="newInfo" placeholder="add a new activity">
+    <button id="addInfo">add</button></label>
+</body>
+  <script>const sports=document.querySelector('#sports')
+sports.addEventListener('click',function(e){
+  const target=e.target
+  if(target.matches('li')){
+  if(target.style.backgroundColor==='red'){
+      target.style.backgroundColor="unset"
+  }else
+  target.style.backgroundColor='red'
+  }
+})
+
+const newInfo=document.querySelector('#newInfo')
+const addInfo=document.querySelector('#addInfo')
+addInfo.addEventListener('click',function(){
+  const info=document.createElement('li')
+  info.setAttribute('id',newInfo.value)
+  info.innerText=newInfo.value
+  sports.appendChild(info)
+  newInfo.value=""
+})</script>
+</html>

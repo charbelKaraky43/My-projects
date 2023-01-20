@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<head>
+  <title>save input</title>
+</head>
+<style>
+      #input-el {
+  border: 1px solid green;
+  border-radius: 3px;
+  width:100%;
+  box-sizing:border-box;
+  padding:10px;
+  margin:0px;
+}
+
+button {
+  margin-right:20px;
+  margin-top:15px;
+  width:200px;
+  border:2px solid green;
+  background-color:lightgreen;
+  font-weight:bold;
+  font-size:15px;
+  padding:10px 20px;
+}
+
+button:hover{
+  border: 2px solid black;
+  background-color:red;
+}
+ul {
+  margin-top:25px;
+  list-style:none;
+}
+a {
+  color:green;
+}
+a:hover{
+  color:blue;
+}
+li {
+  padding-top:7px;
+  padding-left:0px;
+  font-size:17px;
+  margin-left:-20px;
+}
+
+  </style>
+<body>
+  <input type="text" id="input-el">
+  <button id="save">Save</button>
+  <button id="remove">Remove</button>
+  <button id="clear">Clear</button>
+  <ul id="ul-el"></ul>
+</body>
+<script>
+  var saver=document.querySelector('#save')
+var clearer=document.querySelector('#clear')
+var lists=[]
+var remover=document.querySelector('#remove')
+var remov=""
+var listitems=""
+var list=[]
+var ulel=document.querySelector('#ul-el')
+var inputel=document.querySelector('#input-el')
+var k=0
+var Info=JSON.parse(localStorage.getItem("MyInfo"))
+
+if(Info){
+  lists=Info
+  render(lists)
+}
+
+saver.addEventListener('click', function(){
+  if(inputel.value){
+  lists.push(inputel.value)
+  inputel.value=null
+  localStorage.setItem("MyInfo", JSON.stringify(lists))
+  render(lists)}
+  else
+window.alert("you can't save null or empty data")
+})
+
+function render(list){
+ listitems=""
+  for(var i=0;i<list.length;i++){
+    listitems+='<li><a target=blank href='+list[i]+'>'+list[i]+'</a></li>'
+  }
+  ulel.innerHTML=listitems
+}
+
+clearer.addEventListener('mouseover', function(){
+  if(k===0)
+  window.alert("please enter double click to clear all your data")
+  k++
+    })
+
+clearer.addEventListener('dblclick', function(){
+  lists=[]
+  inputel.value=null
+  ulel.innerHTML=null
+  localStorage.clear()
+})
+
+
+remover.addEventListener('click', function(){
+  remov=window.prompt("enter the link to remove it from your list")
+list=[]
+  localStorage.clear()
+  var j=0
+  for(var i=0;i<lists.length;i++){
+    if(lists[i]!==remov)
+      list[j++]=lists[i]
+    }
+    if(j===0){
+      list=[]
+    }
+  lists=list
+  localStorage.setItem("MyInfo",JSON.stringify(lists))
+ render(lists)
+})
+
+  </script>
+</html>

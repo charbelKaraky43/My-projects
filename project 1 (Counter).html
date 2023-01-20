@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+  <head>
+    <title>sport</title>
+    <style>
+      #counter {
+  text-align : center; 
+  color:red;
+  font-size:83px; }
+      body{
+        background-color:lightgrey;	   
+      }
+h1 {
+  text-align:center;
+  color:blue;
+}
+
+button {
+  background-color:green;
+  font-size:26px;
+  font-weight:bold;
+  color:orange;
+  text-align:center;
+  position:relative;
+  margin-left:30%;
+  margin-top:15px;
+  margin-bottom:15px;
+  width:40%;
+  height:15%;
+  border:solid black 2px;
+}
+button:hover{
+  background-color:black;
+  border:solid red 2px;
+ }
+    </style>
+      </head>
+      <body>
+        <h1>Increment the number of the visitors and save us:</h1>
+        <h3 id="counter">0</h3>
+        <button id="count" onclick="increment()">INCREMENT</button>
+        <button id="count" onclick="decrement()">DECREMENT</button>
+        <button onclick="save()">SAVE</button>
+        <button onclick="clearall()">CLEAR ALL</button>
+        <h2 id="result">The previouses visitors are: </h2>
+      <script>var count=0
+var b=0
+function increment(){
+  count+=1
+  document.getElementById("counter").textContent=count
+}
+
+function save(){
+  if(b===0){
+  document.getElementById("result").textContent+=count
+  }
+  else 
+  document.getElementById("result").textContent+=" , "+count
+  b++
+  count=0
+  document.getElementById("counter").textContent=count
+}
+function decrement(){
+  count-=1
+  document.getElementById("counter").textContent=count
+}
+function clearall(){
+  count=0
+  b=0
+  document.getElementById("counter").textContent=0
+  document.getElementById("result").textContent="The previouses visitors are: "
+}</script>
+</body>
+      </html>

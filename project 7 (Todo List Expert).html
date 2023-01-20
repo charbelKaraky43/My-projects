@@ -1,0 +1,309 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>TO DO LIST</title>
+  <style>body{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  width:100%;
+  height:100vh;
+  background-color:lightgrey; 
+}
+
+#input{
+  width:450px;
+  border:2px solid black;
+  display:flex;
+  background-color:white;
+  border-radius:10px;
+  padding:10px;
+  margin-bottom:30px;
+}
+#input-task{
+  flex:1;
+  margin-right:10px;
+  padding:5px;
+}
+#add{
+  padding:0.8px 10px;
+  font-size:20px;
+}
+#add:hover{
+  background-color:red;
+}
+
+.task{
+  background-color:white;
+  width:450px;
+  display:flex;
+  font-size:20px;
+  justify-content:space-between;
+  align-items:center;
+  padding:10px;
+  border-radius:5px;
+  margin-top:15px;
+}
+.task li{
+  list-style:none;
+  flex:5;
+}
+.task button{
+  flex:1;
+  margin:0px 5px;
+  width:30px;
+  height:30px;
+  padding:5px;
+}
+.task button:hover{
+  background-color:red;
+}
+.task .active button{
+  flex:1;
+  margin:0px 5px;
+  width:30px;
+  height:30px;
+  padding:5px;
+}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div id="input">
+      <input type="text" placeholder="Enter a task" id="input-task">
+      <button id="add">➕</button>
+    </div>
+    <div id="ul-el"> </div>
+  </div>
+</body>
+  <script>
+    const input = document.getElementById('input-task')
+const add = document.getElementById('add')
+const ulel = document.getElementById('ul-el')
+let editflag=false
+var list=[]
+var k=0
+
+if(localStorage.getItem('list')!==null){
+  if(!editflag){
+  list=JSON.parse(localStorage.getItem('list'))
+  for(let i=0;i<list.length;i++){
+  let task=document.createElement('div')
+  task.classList.add('task')
+  let li=document.createElement('li')
+  li.innerText=list[i].value
+  if(list[i].id==="line"){
+    li.style.textDecoration='line-through'
+  }
+  task.appendChild(li)
+  let editBtn=document.createElement('button')
+  editBtn.innerText="📝"
+  editBtn.classList.add('editBtn')
+  task.appendChild(editBtn)
+  let checkBtn=document.createElement('button')
+  checkBtn.innerText="✅"
+  checkBtn.classList.add('checkBtn')
+  task.appendChild(checkBtn)
+  let deleteBtn=document.createElement('button')
+  deleteBtn.innerText="❌"
+  deleteBtn.classList.add('deleteBtn')
+  task.appendChild(deleteBtn)
+  let id=document.createElement('id')
+  id.classList.add(0)
+  task.appendChild(id)
+  ulel.appendChild(task)
+  
+  deleteBtn.addEventListener('click',function(e){
+     let list1=JSON.parse(localStorage.getItem('list'))
+     const target=e.target
+     e.target.parentElement.remove()
+     localStorage.removeItem('list')
+     let del=e.target.parentElement.firstChild.innerHTML
+     for(let i=0;i<list1.length;i++){
+       if(list1[i].value===del){
+         list1.splice(i, 1);
+       }
+     }
+  list=list1
+  localStorage.setItem('list',JSON.stringify(list))
+  })
+  
+  checkBtn.addEventListener('click',function(e){
+    const target=e.target.parentElement.firstChild
+    target.style.textDecoration='line-through'
+    let del=e.target.parentElement.firstChild.textContent
+     let list1=JSON.parse(localStorage.getItem('list'))
+     localStorage.removeItem('list')
+     for(let i=0;i<list1.length;i++){
+       if(list1[i].value===del){
+         list1[i].id="line";
+       }
+     }
+  list=list1
+  localStorage.setItem('list',JSON.stringify(list))
+  })
+  
+   editBtn.addEventListener('click',function(e){
+    editflag=true
+    input.value=e.target.parentElement.firstChild.textContent
+    add.innerText="📝"
+    e.target.parentElement.lastChild.className="edit-me"
+    let del=e.target.parentElement.firstChild.textContent
+     let list1=JSON.parse(localStorage.getItem('list'))
+     localStorage.removeItem('list')
+     for(let i=0;i<list1.length;i++){
+       if(list1[i].value===del && list1[i].id==='line'){
+         list1[i].id="edit-me+line"
+       }
+       else if(list1[i].value===del){
+         list1[i].id="edit-me"
+       }
+     }
+  list=list1
+  localStorage.setItem('list',JSON.stringify(list))
+  })
+
+}
+  }else{
+    let list1=JSON.parse(localStorage.getItem('list'))
+   for(let i=0 ; i<ulel.children.length;i++){
+     if(ulel.children[i].lastChild.className==='edit-me'){
+       ulel.children[i].lastChild.className=0
+       ulel.children[i].firstChild.innerText=input.value
+     }
+   }
+   for(let i=0;i<list1.length;i++){
+   if(list1[i].id==='edit-me'){
+      list1[i].value=input.value
+      list1[i].id=0
+      }
+   if(list1[i].id==='edit-me+line'){
+      list1[i].value=input.value
+      list1[i].id='line'
+      }
+   }
+   localStorage.removeItem('list')
+   list=list1
+   localStorage.setItem('list',JSON.stringify(list))
+    editflag=false
+    add.innerText="➕"
+    input.value=""
+  }
+}
+
+add.addEventListener('click',function(){
+  if(!editflag){
+  let task=document.createElement('div')
+  task.classList.add('task')
+  let li=document.createElement('li')
+  li.innerText=input.value
+  task.appendChild(li)
+  let editBtn=document.createElement('button')
+  editBtn.innerText="📝"
+  editBtn.classList.add('editBtn')
+  task.appendChild(editBtn)
+  let checkBtn=document.createElement('button')
+  checkBtn.innerText="✅"
+  checkBtn.classList.add('checkBtn')
+  task.appendChild(checkBtn)
+  let deleteBtn=document.createElement('button')
+  deleteBtn.innerText="❌"
+  deleteBtn.classList.add('deleteBtn')
+  task.appendChild(deleteBtn)
+  let id=document.createElement('id')
+  id.classList.add(0)
+  task.appendChild(id)
+  let element={
+  value:li.innerText,
+  id:0};
+  list.push(element)
+  localStorage.setItem('list',JSON.stringify(list))
+  if(input.value==="")
+  {
+    alert('please enter a task');
+  }else{
+  ulel.appendChild(task);}
+  input.value=""
+  
+deleteBtn.addEventListener('click',function(e){
+     let list1=JSON.parse(localStorage.getItem('list'))
+     const target=e.target
+     e.target.parentElement.remove()
+     localStorage.removeItem('list')
+     let del=e.target.parentElement.firstChild.innerHTML
+     for(let i=0;i<list1.length;i++){
+       if(list1[i].value===del){
+         list1.splice(i, 1);
+       }
+     }
+  list=list1
+  localStorage.setItem('list',JSON.stringify(list))
+  })
+
+  checkBtn.addEventListener('click',function(e){
+    const target=e.target.parentElement.firstChild
+    target.style.textDecoration='line-through'
+    let del=e.target.parentElement.firstChild.textContent
+     let list1=JSON.parse(localStorage.getItem('list'))
+     localStorage.removeItem('list')
+     for(let i=0;i<list1.length;i++){
+       if(list1[i].value===del){
+         list1[i].id="line";
+       }
+     }
+  list=list1
+  localStorage.setItem('list',JSON.stringify(list))
+  })
+  
+   editBtn.addEventListener('click',function(e){
+    editflag=true
+    input.value=e.target.parentElement.firstChild.textContent
+    add.innerText="📝"
+    e.target.parentElement.lastChild.className="edit-me"
+    let del=e.target.parentElement.firstChild.textContent
+     let list1=JSON.parse(localStorage.getItem('list'))
+     localStorage.removeItem('list')
+     for(let i=0;i<list1.length;i++){
+       if(list1[i].value===del && list1[i].id==='line'){
+         list1[i].id="edit-me+line"
+       }
+       else if(list1[i].value===del){
+         list1[i].id="edit-me"
+       }
+     }
+  list=list1
+  localStorage.setItem('list',JSON.stringify(list))
+  })
+   
+}
+ else {
+   let list1=JSON.parse(localStorage.getItem('list'))
+   for(let i=0 ; i<ulel.children.length;i++){
+     if(ulel.children[i].lastChild.className==='edit-me'){
+       ulel.children[i].lastChild.className=0
+       ulel.children[i].firstChild.innerText=input.value
+     }
+   }
+   for(let i=0;i<list1.length;i++){
+   if(list1[i].id==='edit-me'){
+      list1[i].value=input.value
+      list1[i].id=0
+      }
+   if(list1[i].id==='edit-me+line'){
+      list1[i].value=input.value
+      list1[i].id='line'
+      }
+   }
+   localStorage.removeItem('list')
+   list=list1
+   localStorage.setItem('list',JSON.stringify(list))
+    editflag=false
+    add.innerText="➕"
+    input.value=""
+ }
+})
+
+</script>
+</html>

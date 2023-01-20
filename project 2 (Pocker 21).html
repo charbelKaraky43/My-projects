@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<head>
+  <title>pocker 21</title>
+<style>
+body{
+  text-align:center;
+  background-color:lightgrey;
+}
+h4{
+ color:red;
+  font-size:17px;
+}
+h2{
+  color:blue;
+}
+special{
+  color:green;
+}
+special2{
+  color:red;
+  font-size:30px;
+}
+button{
+background-color:green;
+  color:yellow;
+  font-weight:bold;
+  border:none;
+  border-radius:2px;
+  width:150px;
+  height:50px;
+  font-size:24px;
+  padding:10px;
+  margin-bottom:10px;
+  margin-top:10px;  
+}
+button:hover{
+  background-color:black;
+  color:red;
+}
+h3{
+  font-weight:bold;
+  font-size:25px;
+}
+</style>
+</head>
+<body>
+  <h1>Here is the pocker 21</h1>
+  <h4>First u need to get 21 as a summation of ur cards to win , if you get more you will
+    lose and if you get less you will have another try till u reach 21 or higher (random values from 1 to 13)
+  <h2>let's have some fun!</h2>
+  <h3 id="card-el">Cards: </h3>
+  <h3 id="sum-el">Sum: </h3>
+    <button onclick="startGame()">Start Game</button><br>
+    <button onclick="newCard()">New Card</button>
+    <h2 id="result"></h2>
+    <button onclick="tryAgain()">Try Again</button>
+<script>
+
+function randomly(){
+  var random=Math.floor(Math.random()*13)+1
+  return random
+}
+var cards=[]
+cards.push(randomly())
+cards.push(randomly())
+var cardel=document.querySelector("#card-el")
+var sumel=document.getElementById("sum-el")
+var start=false
+function startGame(){
+  start=true
+  renderGame()
+}
+  var correct=false
+function renderGame(){
+  var sum=0
+  cardel.textContent="Cards: "
+  for(var i=0;i<cards.length;i++){
+  cardel.textContent+=cards[i]+" - "
+  sum+=cards[i]
+  }
+  sumel.textContent="Sum: "+sum
+  if(sum<21){
+    document.getElementById('result').textContent="you are less than 21 u can try a newCard!"
+  }
+  else if(sum===21){
+    document.getElementById('result').innerHTML="<special2>WOOHOO, u got 21 u are such a lucky man!!</special2>"
+    correct=true
+  }
+  else{
+    document.getElementById('result').innerHTML="<special>you are greater than 21 u can try the round again !!</special>"
+    correct=true
+  }
+}
+function newCard(){
+  if(start===false){
+    document.getElementById('result').innerHTML="<special2>Hey noob u should start the game first!!</special2>"
+  }
+  else {
+  if(!correct){
+  cards.push(randomly())
+  renderGame()
+  }
+  else{
+    document.getElementById('result').textContent="Hey dude u can't add a newCard since you finish this round so if you need u can only try again "
+   } }
+}
+
+function tryAgain(){
+  correct=false
+  start=false
+  cards=[]
+  cardel.textContent="Cards: "
+  document.getElementById('result').textContent=" "
+  sumel.textContent="Sum: "
+  cards.push(randomly())
+  cards.push(randomly())
+  
+}
+
+</script>  
+</body>
+</html>
+
+
